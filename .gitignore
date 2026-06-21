@@ -1,0 +1,6 @@
+__pycache__/
+mlruns/
+venv/
+attrition_dataset.csv
+final_pipeline.pkl
+mlflow.db

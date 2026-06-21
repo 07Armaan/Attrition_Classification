@@ -1,0 +1,7 @@
+__pycache__/
+mlruns/
+mlflow.db
+venv
+attrition_dataset.csv
+final_pipeline.pkl
+ml_model.ipynb
