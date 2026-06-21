@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Run a Prediction — Attrition Insight</title>
+<meta name="description" content="Enter an employee profile and get a live attrition risk prediction from the trained classification model.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="static/css/style.css">
+<link rel="stylesheet" href="static/css/form.css">
+</head>
+<body>
+
+<!-- ============================ NAVBAR ============================ -->
+<nav class="navbar">
+  <div class="container navbar-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark"></span>
+      Attrition&nbsp;Insight
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/#overview">Overview</a></li>
+      <li><a href="/#how-it-works">How it works</a></li>
+      <li><a href="/#model">The model</a></li>
+      <li><a href="/#glossary">Definitions</a></li>
+      <li><a href="/#faq">FAQ</a></li>
+      <li><a href="predict.html" class="nav-cta active">Predictor</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ============================ PAGE HERO ============================ -->
+<header class="predict-hero">
+  <div class="container predict-hero-inner">
+    <p class="eyebrow">Live model inference</p>
+    <h1>Enter an employee profile</h1>
+    <p>Fill in all nineteen fields as accurately as possible. The form sends the profile straight to the FastAPI <code class="mono" style="color:var(--amber-400)">/predict</code> endpoint and shows the model's result on this page.</p>
+  </div>
+</header>
+
+<!-- ============================ FORM + RESULT ============================ -->
+<section class="container predict-layout">
+
+  <!-- ---------- FORM CARD ---------- -->
+  <form class="form-card" id="predictForm" novalidate>
+
+    <div class="form-section-title"><span class="n">1</span> Personal &amp; demographic</div>
+    <div class="field-grid">
+
+      <div class="field" data-field="Age">
+        <label for="Age">Age <span class="req">*</span></label>
+        <input type="number" id="Age" name="Age" min="1" step="1" placeholder="e.g. 22" required>
+        <span class="field-error">Enter the Age</span>
+      </div>
+
+      <div class="field" data-field="Gender">
+        <label for="Gender">Gender <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select id="Gender" name="Gender" required>
+            <option value="" disabled selected>Select an option</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+        <span class="field-error">Please select a gender.</span>
+      </div>
+
+      <div class="field" data-field="MaritalStatus">
+        <label for="MaritalStatus">Marital Status <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select id="MaritalStatus" name="MaritalStatus" required>
+            <option value="" disabled selected>Select an option</option>
+            <option value="Married">Married</option>
+            <option value="Divorced">Divorced</option>
+            <option value="Single">Single</option>
+          </select>
+        </div>
+        <span class="field-error">Please select a marital status.</span>
+      </div>
+
+      <div class="field" data-field="EducationLevel">
+        <label for="EducationLevel">Education Level <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select id="EducationLevel" name="EducationLevel" required>
+            <option value="" disabled selected>Select an option</option>
+            <option value="High School">High School</option>
+            <option value="Associate Degree">Associate Degree</option>
+            <option value="Bachelor's Degree">Bachelor's Degree</option>
+            <option value="Master's Degree">Master's Degree</option>
+            <option value="PhD">PhD</option>
+          </select>
+        </div>
+        <span class="field-error">Please select an education level.</span>
+      </div>
+
+      <div class="field" data-field="NumberOfDependents">
+        <label for="NumberOfDependents">Number of Dependents <span class="req">*</span></label>
+        <input type="number" id="NumberOfDependents" name="NumberOfDependents" min="0" step="1" placeholder="e.g. 2" required>
+        <span class="field-error">Enter a whole number, 0 or more.</span>
+      </div>
+
+      <div class="field" data-field="DistanceFromHome">
+        <label for="DistanceFromHome">Distance from Home (km) <span class="req">*</span></label>
+        <input type="number" id="DistanceFromHome" name="DistanceFromHome" min="0" step="1" placeholder="e.g. 12" required>
+        <span class="field-error">Enter a whole number, 0 or more.</span>
+      </div>
+
+    </div>
+
+    <div class="form-section-title"><span class="n">2</span> Role &amp; compensation</div>
+    <div class="field-grid">
+
+      <div class="field" data-field="JobRole">
+        <label for="JobRole">Job Role <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select id="JobRole" name="JobRole" required>
+            <option value="" disabled selected>Select an option</option>
+            <option value="Education">Education</option>
+            <option value="Media">Media</option>
+            <option value="HealthCare">HealthCare</option>
+            <option value="Technology">Technology</option>
+            <option value="Finance">Finance</option>
+          </select>
+        </div>
+        <span class="field-error">Please select a job role.</span>
+      </div>
+
+      <div class="field" data-field="JobLevel">
+        <label for="JobLevel">Job Level <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select id="JobLevel" name="JobLevel" required>
+            <option value="" disabled selected>Select an option</option>
+            <option value="Entry">Entry</option>
+            <option value="Mid">Mid</option>
+            <option value="Senior">Senior</option>
+          </select>
+        </div>
+        <span class="field-error">Please select a job level.</span>
+      </div>
+
+      <div class="field" data-field="MonthlyIncome">
+        <label for="MonthlyIncome">Monthly Income <span class="req">*</span></label>
+        <input type="number" id="MonthlyIncome" name="MonthlyIncome" min="0" step="1" placeholder="e.g. 5400" required>
+        <span class="field-error">Enter a whole number, 0 or more.</span>
+      </div>
+
+      <div class="field" data-field="YearsAtCompany">
+        <label for="YearsAtCompany">Years at Company <span class="req">*</span></label>
+        <input type="number" id="YearsAtCompany" name="YearsAtCompany" min="0" step="1" placeholder="e.g. 4" required>
+        <span class="field-error">Enter a whole number, 0 or more.</span>
+      </div>
+
+      <div class="field" data-field="CompanyTenure">
+        <label for="CompanyTenure">Company Tenure (years) <span class="req">*</span></label>
+        <input type="number" id="CompanyTenure" name="CompanyTenure" min="0" step="1" placeholder="e.g. 6" required>
+        <span class="field-error">Enter a whole number, 0 or more.</span>
+      </div>
+
+      <div class="field" data-field="NumberOfPromotions">
+        <label for="NumberOfPromotions">Number of Promotions <span class="req">*</span></label>
+        <input type="number" id="NumberOfPromotions" name="NumberOfPromotions" min="0" step="1" placeholder="e.g. 1" required>
+        <span class="field-error">Enter a whole number, 0 or more.</span>
+      </div>
+
+      <div class="field" data-field="CompanySize">
+        <label for="CompanySize">Company Size <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select id="CompanySize" name="CompanySize" required>
+            <option value="" disabled selected>Select an option</option>
+            <option value="Small">Small</option>
+            <option value="Medium">Medium</option>
+            <option value="Large">Large</option>
+          </select>
+        </div>
+        <span class="field-error">Please select a company size.</span>
+      </div>
+
+      <div class="field" data-field="PerformanceRating">
+        <label for="PerformanceRating">Performance Rating <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select id="PerformanceRating" name="PerformanceRating" required>
+            <option value="" disabled selected>Select an option</option>
+            <option value="Low">Low</option>
+            <option value="Below Average">Below Average</option>
+            <option value="Average">Average</option>
+            <option value="High">High</option>
+          </select>
+        </div>
+        <span class="field-error">Please select a performance rating.</span>
+      </div>
+
+    </div>
+
+    <div class="form-section-title"><span class="n">3</span> Work conditions &amp; sentiment</div>
+    <div class="field-grid">
+
+      <div class="field" data-field="WorkLifeBalance">
+        <label for="WorkLifeBalance">Work-Life Balance <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select id="WorkLifeBalance" name="WorkLifeBalance" required>
+            <option value="" disabled selected>Select an option</option>
+            <option value="Poor">Poor</option>
+            <option value="Fair">Fair</option>
+            <option value="Good">Good</option>
+            <option value="Excellent">Excellent</option>
+          </select>
+        </div>
+        <span class="field-error">Please select a work-life balance rating.</span>
+      </div>
+
+      <div class="field" data-field="JobSatisfaction">
+        <label for="JobSatisfaction">Job Satisfaction <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select id="JobSatisfaction" name="JobSatisfaction" required>
+            <option value="" disabled selected>Select an option</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+            <option value="Very High">Very High</option>
+          </select>
+        </div>
+        <span class="field-error">Please select a job satisfaction level.</span>
+      </div>
+
+      <div class="field" data-field="Overtime">
+        <label for="Overtime">Overtime <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select id="Overtime" name="Overtime" required>
+            <option value="" disabled selected>Select an option</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <span class="field-error">Please select an option.</span>
+      </div>
+
+      <div class="field" data-field="RemoteWork">
+        <label for="RemoteWork">Remote Work <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select id="RemoteWork" name="RemoteWork" required>
+            <option value="" disabled selected>Select an option</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <span class="field-error">Please select an option.</span>
+      </div>
+
+      <div class="field" data-field="LeadershipOpportunities">
+        <label for="LeadershipOpportunities">Leadership Opportunities <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select id="LeadershipOpportunities" name="LeadershipOpportunities" required>
+            <option value="" disabled selected>Select an option</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <span class="field-error">Please select an option.</span>
+      </div>
+
+      <div class="field" data-field="InnovationOpportunities">
+        <label for="InnovationOpportunities">Innovation Opportunities <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select id="InnovationOpportunities" name="InnovationOpportunities" required>
+            <option value="" disabled selected>Select an option</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <span class="field-error">Please select an option.</span>
+      </div>
+
+      <div class="field" data-field="CompanyReputation">
+        <label for="CompanyReputation">Company Reputation <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select id="CompanyReputation" name="CompanyReputation" required>
+            <option value="" disabled selected>Select an option</option>
+            <option value="Poor">Poor</option>
+            <option value="Fair">Fair</option>
+            <option value="Good">Good</option>
+            <option value="Excellent">Excellent</option>
+          </select>
+        </div>
+        <span class="field-error">Please select a company reputation rating.</span>
+      </div>
+
+      <div class="field" data-field="EmployeeRecognition">
+        <label for="EmployeeRecognition">Employee Recognition <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select id="EmployeeRecognition" name="EmployeeRecognition" required>
+            <option value="" disabled selected>Select an option</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+            <option value="Very High">Very High</option>
+          </select>
+        </div>
+        <span class="field-error">Please select an employee recognition level.</span>
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <div class="form-progress">
+        <div class="form-progress-track"><div class="form-progress-fill" id="progressFill"></div></div>
+        <div class="form-progress-label" id="progressLabel">0 / 19 fields completed</div>
+      </div>
+      <button type="button" class="btn btn-ghost" id="fillSampleBtn">Fill sample data</button>
+      <button type="submit" class="btn btn-primary" id="submitBtn" onclick="setTimeout(()=>document.querySelector('.result-panel').scrollIntoView({behavior:'smooth'}),300)">
+        Predict attrition risk
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+  </form>
+
+  <!-- ---------- RESULT SIDEBAR ---------- -->
+  <aside class="result-panel">
+
+    <div class="result-state result-idle" id="resultIdle">
+      <div class="gauge-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+      </div>
+      <h4>No prediction yet</h4>
+      <p>Complete the form and run a prediction to see the model's risk score here.</p>
+    </div>
+
+    <div class="result-state result-loading" id="resultLoading">
+      <div class="spinner"></div>
+      <p>Scoring profile against model…</p>
+    </div>
+
+    <div class="result-state result-done" id="resultDone">
+      <div class="gauge-wrap">
+        <svg viewBox="0 0 160 160">
+          <circle class="gauge-bg" cx="80" cy="80" r="70"/>
+          <circle class="gauge-fill" id="gaugeFill" cx="80" cy="80" r="70" stroke="#f5a623" stroke-dasharray="440" stroke-dashoffset="440"/>
+        </svg>
+        <div class="gauge-center">
+          <span class="pct" id="gaugePct">0%</span>
+          <span class="pct-label">risk score</span>
+        </div>
+      </div>
+      <div class="result-verdict risk" id="resultVerdict">● Likely to leave</div>
+      <p class="result-summary" id="resultSummary">The model estimates this employee's attrition probability based on the submitted profile.</p>
+
+      <div class="result-factors" id="resultFactors" style="display:none;">
+        <h5>Top contributing factors</h5>
+        <div class="factor-bars" id="dynamicFactorBars"></div>
+      </div>
+
+      <div class="result-actions">
+        <button type="button" class="btn btn-ghost" id="resetBtn">Reset form</button>
+        <button type="button" class="btn btn-primary" id="predictAgainBtn">New prediction</button>
+      </div>
+    </div>
+
+    <div class="result-state result-error" id="resultError">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+      <h4>Couldn't reach the model</h4>
+      <p id="errorMessage">The prediction request failed. Make sure the FastAPI backend is running and reachable.</p>
+      <button type="button" class="btn btn-ghost" id="retryBtn">Try again</button>
+    </div>
+
+  </aside>
+
+</section>
+
+<div class="toast" id="toast"><span class="dot"></span><span id="toastMsg"></span></div>
+
+<!-- ============================ FOOTER ============================ -->
+<footer>
+  <div class="container">
+    <div class="footer-bottom" style="border-top:none; padding-top:0;">
+      <span>© 2026 Attrition Insight. Reference template for demonstration purposes.</span>
+      <a href="index.html" class="mono">← Back to overview</a>
+    </div>
+  </div>
+</footer>
+
+<script src="static/js/main.js"></script>
+<script src="static/js/predict.js"></script>
+</body>
+</html>

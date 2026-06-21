@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attrition Insight — Predict Employee Attrition with Machine Learning</title>
+<meta name="description" content="Attrition Insight uses a trained machine learning model to estimate employee attrition risk from HR data, helping teams act before talent walks out the door.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+<!-- ============================ NAVBAR ============================ -->
+<nav class="navbar">
+  <div class="container navbar-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark"></span>
+      Attrition&nbsp;Insight
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#overview" class="active">Overview</a></li>
+      <li><a href="#how-it-works">How it works</a></li>
+      <li><a href="#model">The model</a></li>
+      <li><a href="#glossary">Definitions</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="predict.html" class="nav-cta">Open predictor →</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ============================ HERO ============================ -->
+<header class="hero" id="overview">
+  <div class="container hero-grid">
+    <div class="hero-copy" data-reveal>
+      <p class="eyebrow">Predictive HR Analytics</p>
+      <h1>Know who's at risk of <span class="accent">leaving</span> before they hand in notice.</h1>
+      <p>Attrition Insight runs your employee data through a trained classification model and returns a clear, explainable risk score — so retention conversations happen with weeks to spare, not after an exit interview.</p>
+      <div class="hero-actions">
+        <a href="predict.html" class="btn btn-primary">
+          Run a prediction
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#how-it-works" class="btn btn-ghost">See how it works</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <span class="num">Machine Learning</span>
+          <span class="label">Model</span>
+        </div>
+        <div>
+          <span class="num">&lt;1s</span>
+          <span class="label">Inference time</span>
+        </div>
+        <div>
+          <span class="num">2</span>
+          <span class="label">Classes: Stay / Leave</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual" data-reveal>
+      <div class="pulse-card">
+        <div class="pulse-card-head">
+          <h4>Live risk pulse</h4>
+          <span class="pulse-tag">● model active</span>
+        </div>
+        <div class="pulse-svg-wrap">
+          <svg viewBox="0 0 400 140" preserveAspectRatio="none">
+            <path class="pulse-line" d="M0,80 L50,80 L65,40 L80,110 L95,20 L110,80 L160,80 L180,80 L195,55 L210,95 L225,80 L400,80"/>
+            <circle class="pulse-dot" cx="95" cy="20" r="5"/>
+          </svg>
+        </div>
+        <div class="pulse-grid-row">
+          <div class="pulse-metric risk">
+            <div class="v">>41,700</div>
+            <div class="l">Trained data</div>
+          </div>
+          <div class="pulse-metric safe">
+            <div class="v">0.002114</div>
+            <div class="l">Overfitting</div>
+          </div>
+          <div class="pulse-metric">
+            <div class="v">76.02%</div>
+            <div class="l">Model accuracy score</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============================ TRUST STRIP ============================ -->
+<div class="strip">
+  <div class="container strip-inner">
+    <span class="strip-label">BUILT FOR</span>
+    <div class="strip-tags">
+      <span>HR Operations</span>
+      <span>People Analytics</span>
+      <span>Workforce Planning</span>
+      <span>Talent Retention</span>
+      <span>Line Managers</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ ABOUT ============================ -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="split" data-reveal>
+      <div class="split-copy">
+        <p class="eyebrow">About the project</p>
+        <h2>A second opinion, built on data instead of gut feel.</h2>
+        <p>Most attrition is predictable in hindsight — pay fell behind the market, promotions stalled, overtime crept up, recognition dried up. Attrition Insight takes the same eighteen signals an experienced HR partner would look at and turns them into a single, consistent probability, every time, for every employee.</p>
+        <ul class="check-list">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg>
+            Trained on structured employee records — compensation, role, tenure, satisfaction, and work conditions.
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg>
+            Outputs a calibrated probability, not just a label, so you can prioritise by severity.
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg>
+            Ships as a lightweight web form backed by a FastAPI service
+          </li>
+        </ul>
+        <a href="predict.html" class="btn btn-primary mt-8">Try the predictor</a>
+      </div>
+      <div class="split-media">
+        <div class="media-frame">
+          <svg viewBox="0 0 560 460" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#1f2b48"/>
+                <stop offset="100%" stop-color="#0f1729"/>
+              </linearGradient>
+              <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ffc15e"/>
+                <stop offset="100%" stop-color="#f5a623"/>
+              </linearGradient>
+            </defs>
+            <rect width="560" height="460" fill="url(#bgGrad)"/>
+            <rect x="32" y="32" width="496" height="396" rx="18" fill="#161f36" stroke="#2c3a5c"/>
+            <circle cx="64" cy="62" r="5" fill="#e8604c"/>
+            <circle cx="82" cy="62" r="5" fill="#f5a623"/>
+            <circle cx="100" cy="62" r="5" fill="#2bb6a3"/>
+            <text x="64" y="100" fill="#6b7aa1" font-family="JetBrains Mono, monospace" font-size="12">department_risk_breakdown.csv</text>
+            <g font-family="Inter, sans-serif" font-size="12" fill="#f5f3ef">
+              <rect x="64" y="300" width="44" height="100" rx="6" fill="url(#barGrad)"/>
+              <text x="86" y="416" text-anchor="middle" fill="#6b7aa1">Tech</text>
+              <rect x="144" y="240" width="44" height="160" rx="6" fill="url(#barGrad)"/>
+              <text x="166" y="416" text-anchor="middle" fill="#6b7aa1">Finance</text>
+              <rect x="224" y="330" width="44" height="70" rx="6" fill="#2bb6a3"/>
+              <text x="246" y="416" text-anchor="middle" fill="#6b7aa1">Health</text>
+              <rect x="304" y="200" width="44" height="200" rx="6" fill="url(#barGrad)"/>
+              <text x="326" y="416" text-anchor="middle" fill="#6b7aa1">Media</text>
+              <rect x="384" y="350" width="44" height="50" rx="6" fill="#2bb6a3"/>
+              <text x="406" y="416" text-anchor="middle" fill="#6b7aa1">Education</text>
+            </g>
+            <text x="64" y="190" fill="#fff" font-family="Space Grotesk, sans-serif" font-size="18" font-weight="700">Risk by job role</text>
+            <text x="64" y="212" fill="#6b7aa1" font-family="Inter, sans-serif" font-size="12.5">Share of employees flagged high-risk</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ HOW IT WORKS ============================ -->
+<section class="section" id="how-it-works">
+  <div class="container">
+    <div class="section-head center" data-reveal>
+      <p class="eyebrow" style="justify-content:center;">How it works</p>
+      <h2>From a profile to a prediction in four steps.</h2>
+      <p>The same pipeline runs every time, so results stay consistent across employees, teams, and review cycles.</p>
+    </div>
+
+    <div class="process-rail" data-reveal>
+      <div class="process-step">
+        <div class="step-index">01</div>
+        <div class="step-body">
+          <h3>You fill in the employee profile</h3>
+          <p>Nineteen fields covering demographics, role, compensation, satisfaction, and work conditions — the same fields HR systems already track. No file upload, no spreadsheet required.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-index">02</div>
+        <div class="step-body">
+          <h3>The form encodes it for the model</h3>
+          <p>Categorical answers like job role or work-life balance are converted into the exact numeric format the model was trained on, then bundled into a single request payload.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-index">03</div>
+        <div class="step-body">
+          <h3>FastAPI calls the trained model</h3>
+          <p>The payload is sent to a <code class="mono" style="color:var(--amber-400)">/predict</code> endpoint, where your serialized classifier (scikit-learn, XGBoost, or similar) scores it in milliseconds.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-index">04</div>
+        <div class="step-body">
+          <h3>You get a probability, not a guess</h3>
+          <p>The result comes back as a percentage risk of attrition plus a Stay / Leave verdict, rendered live on the predictor page with no page reload.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ THE MODEL ============================ -->
+<section class="section" id="model">
+  <div class="container">
+    <div class="split reverse" data-reveal>
+      <div class="split-media">
+      </div>
+      <div class="split-copy">
+        <p class="eyebrow">The model</p>
+        <h2>A binary classifier, trained to spot the early signal.</h2>
+        <p>Attrition Insight is model-agnostic. The interface and API contract are built around a standard tabular classification setup: nineteen input features, one binary target — <strong style="color:#fff;">Stayed</strong> or <strong style="color:#fff;">Left</strong>.</p>
+        <ul class="check-list">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg>
+            Works with scikit-learn, XGBoost, LightGBM, or any model exposing a <code class="mono" style="color:var(--teal-400)">predict_proba()</code>-style method.
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg>
+            Categorical fields are one-hot or ordinal encoded server-side to match your training pipeline.
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg>
+            Swap the serialized model file without touching the frontend — the form and API contract stay fixed.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ DEFINITIONS / GLOSSARY ============================ -->
+<section class="section" id="glossary">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">Definitions</p>
+      <h2>Every field, in plain language.</h2>
+      <p>A quick reference for each input the predictor asks for, and what it means in the model.</p>
+    </div>
+
+    <div class="glossary" data-reveal>
+      <div class="gloss-row">
+        <div class="gloss-term">Attrition</div>
+        <div class="gloss-def">The rate at which employees leave a company, voluntarily or otherwise, over a given period. The model predicts the <strong>probability</strong> an individual employee falls into the "left" group.</div>
+      </div>
+      <div class="gloss-row">
+        <div class="gloss-term">Work-Life Balance</div>
+        <div class="gloss-def">Self-reported balance between job demands and personal life, captured as <strong>Excellent, Good, Fair,</strong> or <strong>Poor</strong>.</div>
+      </div>
+      <div class="gloss-row">
+        <div class="gloss-term">Job Satisfaction</div>
+        <div class="gloss-def">How content the employee is in their current role, rated <strong>Very High, High, Medium,</strong> or <strong>Low</strong>.</div>
+      </div>
+      <div class="gloss-row">
+        <div class="gloss-term">Performance Rating</div>
+        <div class="gloss-def">The employee's most recent formal performance review outcome: <strong>High, Average, Below Average,</strong> or <strong>Low</strong>.</div>
+      </div>
+      <div class="gloss-row">
+        <div class="gloss-term">Job Level</div>
+        <div class="gloss-def">Seniority tier within their role — <strong>Entry, Mid,</strong> or <strong>Senior</strong>.</div>
+      </div>
+      <div class="gloss-row">
+        <div class="gloss-term">Company Tenure</div>
+        <div class="gloss-def">Total years the employee has been with the organisation across all roles, distinct from years in their <em>current</em> position.</div>
+      </div>
+      <div class="gloss-row">
+        <div class="gloss-term">Leadership Opportunities</div>
+        <div class="gloss-def">Whether the employee currently has access to leadership-track responsibilities or mentoring programmes (<strong>Yes / No</strong>).</div>
+      </div>
+      <div class="gloss-row">
+        <div class="gloss-term">Innovation Opportunities</div>
+        <div class="gloss-def">Whether the employee's role allows room to propose, build, or experiment with new ideas (<strong>Yes / No</strong>).</div>
+      </div>
+      <div class="gloss-row">
+        <div class="gloss-term">Company Reputation</div>
+        <div class="gloss-def">The employee's perception of how the company is viewed externally — <strong>Excellent, Good, Fair,</strong> or <strong>Poor</strong>.</div>
+      </div>
+      <div class="gloss-row">
+        <div class="gloss-term">Employee Recognition</div>
+        <div class="gloss-def">How recognised the employee feels for their contributions, rated <strong>Very High, High, Medium,</strong> or <strong>Low</strong>.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ WHY IT MATTERS ============================ -->
+<section class="section" id="why">
+  <div class="container">
+    <div class="section-head center" data-reveal>
+      <p class="eyebrow" style="justify-content:center;">Why it matters</p>
+      <h2>Replacing an employee costs far more than keeping one.</h2>
+      <p>Recruiting, onboarding, and lost productivity stack up quietly. Catching risk early turns an exit into a conversation.</p>
+    </div>
+    <div class="grid-3" data-reveal>
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        </div>
+        <h3>Cost of replacement</h3>
+        <p>Sourcing, interviewing, and ramping a replacement can cost a substantial multiple of the departing employee's salary — before lost institutional knowledge is even counted.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <h3>Team disruption</h3>
+        <p>Every departure ripples through a team — redistributed workload, paused projects, and a dip in morale that's hard to quantify but easy to feel.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <h3>Earlier intervention</h3>
+        <p>A risk score weeks ahead of resignation gives managers room for a real conversation — about workload, pay, or growth — while there's still something to act on.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FAQ ============================ -->
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">FAQ</p>
+      <h2>Good to know before you predict.</h2>
+    </div>
+    <div data-reveal>
+      <div class="faq-item open">
+        <div class="faq-q"><span>Is this connected to a real machine learning model?</span><span class="plus"></span></div>
+        <div class="faq-a"><div class="faq-a-inner">Yes. The form sends data to a FastAPI <code class="mono">/predict</code> endpoint. Out of the box it ships with a placeholder scoring function so the whole flow works end to end — swap in your trained model file and it scores real predictions immediately.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>What format does my model need to be in?</span><span class="plus"></span></div>
+        <div class="faq-a"><div class="faq-a-inner">Any model saved as a <code class="mono">.pkl</code> or <code class="mono">.joblib</code> file that exposes a scikit-learn-style <code class="mono">predict_proba()</code> method works out of the box with the provided backend code. Other formats just need a small loader adjustment.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>Do I need to change the encoding of categorical fields?</span><span class="plus"></span></div>
+        <div class="faq-a"><div class="faq-a-inner">The backend includes an encoding map matching the exact category options used in the form. If your training pipeline encoded categories differently (e.g. a different one-hot column order), update the encoding section in <code class="mono">main.py</code> to match.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>Can this run without internet access, fully self-hosted?</span><span class="plus"></span></div>
+        <div class="faq-a"><div class="faq-a-inner">Yes. Both pages are static HTML/CSS/JS with no external dependencies beyond a Google Fonts import, and the backend is a self-contained FastAPI app — deploy both on your own infrastructure.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>Is employee data stored anywhere?</span><span class="plus"></span></div>
+        <div class="faq-a"><div class="faq-a-inner">Not by default. The reference backend scores each request and returns a result without persisting it. Add your own logging or database layer if you need an audit trail.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CTA ============================ -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="cta-band" data-reveal>
+      <h2>Ready to see a risk score?</h2>
+      <p>Fill in one employee profile and get a live prediction in seconds.</p>
+      <div class="cta-actions">
+        <a href="predict.html" class="btn btn-primary">
+          Open the predictor
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FOOTER ============================ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="brand"><span class="brand-mark"></span>Attrition Insight</a>
+        <p>A self-hostable employee attrition classifier — informational frontend, FastAPI backend, bring your own trained model.</p>
+      </div>
+      <div class="footer-col">
+        <h5>PRODUCT</h5>
+        <a href="#overview">Overview</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#model">The model</a>
+        <a href="predict.html">Predictor</a>
+      </div>
+      <div class="footer-col">
+        <h5>RESOURCES</h5>
+        <a href="#glossary">Definitions</a>
+        <a href="#faq">FAQ</a>
+        <a href="#why">Why it matters</a>
+      </div>
+      <div class="footer-col">
+        <h5>STACK</h5>
+        <a href="#" onclick="return false;">HTML / CSS / JS</a>
+        <a href="#" onclick="return false;">FastAPI</a>
+        <a href="#" onclick="return false;">scikit-learn ready</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Attrition Insight. Reference template for demonstration purposes.</span>
+      <span class="mono">v1.0.0</span>
+    </div>
+  </div>
+</footer>
+
+<script src="static/js/main.js"></script>
+</body>
+</html>
